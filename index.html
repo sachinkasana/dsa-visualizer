@@ -9,15 +9,13 @@
     <meta name="author" content="Sachin Kasana">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <!-- Google Analytics -->
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-8BXMZE8Q55"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-8BXMZE8Q55');
-</script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-8BXMZE8Q55"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-8BXMZE8Q55');
+    </script>
 
     <style>
         :root {
@@ -35,106 +33,167 @@
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background-color: var(--color-bg-base); color: var(--color-text-primary); overflow: hidden; }
         .container { display: flex; height: 100vh; width: 100%; }
-        .canvas-wrapper { flex: 1; position: relative; background: linear-gradient(135deg, var(--color-bg-base) 0%, var(--color-bg-surface) 100%); }
-        #canvas { display: block; width: 100%; height: 100%; }
-        .sidebar { width: 400px; background-color: var(--color-bg-elevated); border-left: 1px solid rgba(56, 189, 248, 0.2); display: flex; flex-direction: column; padding: 20px; gap: 20px; overflow-y: auto; }
-        .panel { background-color: var(--color-bg-surface); border: 1px solid rgba(56, 189, 248, 0.1); border-radius: 8px; padding: 16px; gap: 12px; display: flex; flex-direction: column; }
-        .panel-title { font-size: 14px; font-weight: 600; color: var(--color-accent); text-transform: uppercase; letter-spacing: 1px; }
-        .form-group { display: flex; flex-direction: column; gap: 6px; }
-        .form-label { font-size: 12px; color: var(--color-text-muted); font-weight: 500; }
-        input[type="text"], input[type="number"] { background-color: rgba(30, 41, 59, 0.5); border: 1px solid rgba(56, 189, 248, 0.2); border-radius: 6px; padding: 8px 12px; color: var(--color-text-primary); font-size: 14px; transition: all 0.2s; }
-        input[type="text"]:focus, input[type="number"]:focus { outline: none; border-color: var(--color-accent); box-shadow: 0 0 8px rgba(56, 189, 248, 0.3); }
-        .button-group { display: flex; gap: 10px; flex-wrap: wrap; }
-        button { flex: 1; min-width: 100px; padding: 10px 12px; border: none; border-radius: 6px; font-size: 13px; font-weight: 500; cursor: pointer; transition: all 0.2s; text-transform: uppercase; letter-spacing: 0.5px; }
-        .btn-primary { background-color: var(--color-accent); color: var(--color-bg-base); font-weight: 600; }
-        .btn-primary:hover { background-color: #0ea5e9; box-shadow: 0 0 12px rgba(56, 189, 248, 0.4); }
-        .btn-secondary { background-color: rgba(56, 189, 248, 0.1); color: var(--color-accent); border: 1px solid rgba(56, 189, 248, 0.3); }
-        .btn-secondary:hover { background-color: rgba(56, 189, 248, 0.2); }
-        .memory-blocks-container { display: flex; overflow-x: auto; gap: 8px; padding: 12px; background: rgba(30, 41, 59, 0.4); border: 1px solid rgba(56, 189, 248, 0.15); border-radius: 8px; min-height: 150px; }
-        .memory-block { display: flex; flex-direction: column; align-items: center; gap: 6px; padding: 12px; background: linear-gradient(135deg, rgba(56, 189, 248, 0.08) 0%, rgba(56, 189, 248, 0.01) 100%); border: 2px solid rgba(56, 189, 248, 0.25); border-radius: 10px; min-width: 100px; flex-shrink: 0; cursor: pointer; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); position: relative; user-select: none; }
-        .memory-block:hover { background: linear-gradient(135deg, rgba(56, 189, 248, 0.15) 0%, rgba(56, 189, 248, 0.05) 100%); border-color: var(--color-accent); transform: translateY(-6px) scale(1.05); }
-        .memory-block.active { animation: blockPulse 2s ease-in-out infinite; border-color: var(--color-accent); }
-        @keyframes blockPulse { 0%, 100% { box-shadow: 0 0 20px rgba(56, 189, 248, 0.6); } 50% { box-shadow: 0 0 25px rgba(56, 189, 248, 0.8); } }
-        .block-var-name { font-weight: 700; color: var(--color-accent); font-size: 16px; }
-        .block-address { color: var(--color-text-muted); font-size: 10px; }
-        .block-value { color: var(--color-success); font-weight: 700; font-size: 16px; margin-top: 4px; }
-        .block-delete-btn { position: absolute; top: 4px; right: 4px; padding: 4px 8px; font-size: 11px; background: rgba(239, 68, 68, 0.2); border: 1px solid rgba(239, 68, 68, 0.4); color: var(--color-danger); border-radius: 4px; cursor: pointer; opacity: 0; transition: all 0.3s; font-weight: 600; }
+        .canvas-wrapper { flex: 1; position: relative; background: linear-gradient(135deg, var(--color-bg-base) 0%, var(--color-bg-surface) 100%); display: flex; align-items: center; justify-content: center; }
+        #canvas { display: none; }
+        
+        /* Memory Grid Display */
+        .memory-grid-display { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; padding: 40px; }
+        .memory-slot { aspect-ratio: 1; border: 2px solid rgba(56, 189, 248, 0.3); border-radius: 12px; padding: 16px; display: flex; flex-direction: column; justify-content: space-between; align-items: center; text-align: center; background: linear-gradient(135deg, rgba(56, 189, 248, 0.1) 0%, rgba(56, 189, 248, 0.02) 100%); cursor: pointer; transition: all 0.3s ease; position: relative; }
+        .memory-slot.filled { background: linear-gradient(135deg, rgba(56, 189, 248, 0.2) 0%, rgba(56, 189, 248, 0.08) 100%); border-color: var(--color-accent); box-shadow: 0 0 20px rgba(56, 189, 248, 0.4); }
+        .memory-slot.filled.active { border-color: #0ea5e9; box-shadow: 0 0 30px rgba(56, 189, 248, 0.8), inset 0 0 20px rgba(56, 189, 248, 0.3); }
+        .memory-slot.empty { opacity: 0.5; }
+        .slot-var-name { font-size: 24px; font-weight: 800; color: var(--color-accent); text-transform: uppercase; }
+        .slot-var-value { font-size: 32px; font-weight: 800; color: var(--color-success); }
+        .slot-address { font-size: 12px; color: var(--color-text-muted); margin-top: auto; }
+        .slot-empty-text { color: var(--color-text-muted); font-size: 14px; }
+
+        .sidebar { width: 420px; background-color: var(--color-bg-elevated); border-left: 1px solid rgba(56, 189, 248, 0.2); display: flex; flex-direction: column; padding: 24px; gap: 20px; overflow-y: auto; }
+        .panel { background-color: var(--color-bg-surface); border: 1px solid rgba(56, 189, 248, 0.1); border-radius: 12px; padding: 18px; display: flex; flex-direction: column; gap: 14px; }
+        .panel-title { font-size: 12px; font-weight: 700; color: var(--color-accent); text-transform: uppercase; letter-spacing: 1.5px; }
+        .form-group { display: flex; flex-direction: column; gap: 8px; }
+        .form-label { font-size: 12px; color: var(--color-text-muted); font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; }
+        input[type="text"], input[type="number"] { background-color: rgba(30, 41, 59, 0.6); border: 1.5px solid rgba(56, 189, 248, 0.2); border-radius: 8px; padding: 10px 14px; color: var(--color-text-primary); font-size: 14px; transition: all 0.25s; }
+        input[type="text"]:focus, input[type="number"]:focus { outline: none; border-color: var(--color-accent); box-shadow: 0 0 12px rgba(56, 189, 248, 0.4); background-color: rgba(30, 41, 59, 0.8); }
+        .button-group { display: flex; gap: 12px; flex-wrap: wrap; }
+        button { flex: 1; min-width: 100px; padding: 11px 16px; border: none; border-radius: 8px; font-size: 12px; font-weight: 700; cursor: pointer; transition: all 0.25s; text-transform: uppercase; letter-spacing: 0.5px; }
+        .btn-primary { background-color: var(--color-accent); color: var(--color-bg-base); }
+        .btn-primary:hover { background-color: #0ea5e9; box-shadow: 0 0 16px rgba(56, 189, 248, 0.5); transform: translateY(-2px); }
+        .btn-primary:active { transform: translateY(0); }
+        .btn-secondary { background-color: rgba(255, 255, 255, 0.95); color: var(--color-bg-base); font-weight: 700; }
+        .btn-secondary:hover { background-color: #ffffff; box-shadow: 0 4px 12px rgba(255, 255, 255, 0.3); transform: translateY(-2px); }
+        .btn-secondary:active { transform: translateY(0); }
+
+        .memory-blocks-container { display: flex; flex-direction: column; gap: 12px; max-height: 380px; overflow-y: auto; }
+        .memory-block { display: flex; align-items: center; justify-content: space-between; padding: 16px; background: linear-gradient(135deg, rgba(56, 189, 248, 0.12) 0%, rgba(56, 189, 248, 0.03) 100%); border: 2px solid rgba(56, 189, 248, 0.35); border-radius: 10px; cursor: pointer; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); position: relative; }
+        .memory-block:hover { background: linear-gradient(135deg, rgba(56, 189, 248, 0.18) 0%, rgba(56, 189, 248, 0.06) 100%); border-color: var(--color-accent); transform: translateX(4px); box-shadow: 0 8px 20px rgba(56, 189, 248, 0.3); }
+        .memory-block.active { background: linear-gradient(135deg, rgba(56, 189, 248, 0.25) 0%, rgba(56, 189, 248, 0.12) 100%); border-color: var(--color-accent); box-shadow: 0 0 28px rgba(56, 189, 248, 0.7), inset 0 0 14px rgba(56, 189, 248, 0.25); animation: blockPulse 2s ease-in-out infinite; }
+        @keyframes blockPulse { 0%, 100% { box-shadow: 0 0 28px rgba(56, 189, 248, 0.7), inset 0 0 14px rgba(56, 189, 248, 0.25); } 50% { box-shadow: 0 0 32px rgba(56, 189, 248, 0.9), inset 0 0 18px rgba(56, 189, 248, 0.35); } }
+
+        .block-info { display: flex; flex-direction: column; gap: 6px; flex: 1; }
+        .block-header { display: flex; align-items: baseline; gap: 8px; }
+        .block-var-name { font-weight: 800; color: var(--color-accent); font-size: 15px; text-transform: uppercase; letter-spacing: 0.8px; }
+        .block-type { font-size: 11px; color: var(--color-text-muted); font-weight: 600; text-transform: uppercase; }
+        .block-value { color: var(--color-success); font-weight: 800; font-size: 18px; margin: 0; }
+        .block-address { color: var(--color-text-muted); font-size: 10px; margin-top: 2px; }
+        .block-delete-btn { padding: 6px 8px; font-size: 16px; background: transparent; border: none; color: var(--color-danger); cursor: pointer; opacity: 0; transition: all 0.3s; font-weight: 700; flex-shrink: 0; }
         .memory-block:hover .block-delete-btn { opacity: 1; }
-        .memory-empty-state { color: var(--color-text-muted); font-size: 12px; text-align: center; padding: 20px; opacity: 0.7; }
+        .block-delete-btn:hover { transform: scale(1.2); }
+
+        .memory-empty-state { color: var(--color-text-muted); font-size: 13px; text-align: center; padding: 30px 20px; opacity: 0.6; }
+        .memory-info { background: rgba(56, 189, 248, 0.08); border-left: 3px solid var(--color-accent); padding: 10px 12px; font-size: 11px; color: var(--color-text-secondary); border-radius: 4px; }
+        .memory-info strong { color: var(--color-accent); }
+
         .stats { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-        .stat-box { background-color: rgba(30, 41, 59, 0.5); border: 1px solid rgba(56, 189, 248, 0.1); border-radius: 6px; padding: 12px; text-align: center; }
-        .stat-value { font-size: 18px; font-weight: 700; color: var(--color-accent); }
-        .stat-label { font-size: 11px; color: var(--color-text-muted); text-transform: uppercase; }
-        .info-box { background-color: rgba(16, 185, 129, 0.1); border-left: 3px solid var(--color-success); padding: 12px; font-size: 12px; color: var(--color-text-secondary); }
-        .header { padding: 12px 0; border-bottom: 1px solid rgba(56, 189, 248, 0.1); }
-        .header h1 { font-size: 18px; color: var(--color-accent); }
-        .header p { font-size: 12px; color: var(--color-text-muted); }
-        .footer { position: fixed; bottom: 0; left: 0; right: 0; background: linear-gradient(90deg, rgba(2, 6, 23, 0.98) 0%, rgba(15, 23, 42, 0.98) 100%); border-top: 1px solid rgba(56, 189, 248, 0.15); padding: 12px 16px; font-size: 11px; color: var(--color-text-muted); display: flex; justify-content: space-between; z-index: 1000; }
-        .footer a { color: var(--color-accent); text-decoration: none; font-weight: 500; }
+        .stat-box { background: linear-gradient(135deg, rgba(56, 189, 248, 0.08) 0%, rgba(56, 189, 248, 0.01) 100%); border: 1px solid rgba(56, 189, 248, 0.15); border-radius: 10px; padding: 14px; text-align: center; transition: all 0.3s; }
+        .stat-box:hover { border-color: var(--color-accent); box-shadow: 0 4px 12px rgba(56, 189, 248, 0.15); }
+        .stat-value { font-size: 24px; font-weight: 800; color: var(--color-accent); margin-bottom: 4px; }
+        .stat-label { font-size: 10px; color: var(--color-text-muted); text-transform: uppercase; letter-spacing: 0.5px; font-weight: 600; }
+
+        .info-box { background: linear-gradient(135deg, rgba(16, 185, 129, 0.1) 0%, rgba(16, 185, 129, 0.02) 100%); border-left: 4px solid var(--color-success); border-radius: 6px; padding: 12px 14px; font-size: 12px; color: var(--color-text-secondary); line-height: 1.5; }
+        .info-box strong { color: var(--color-success); }
+
+        .header { padding-bottom: 12px; border-bottom: 1px solid rgba(56, 189, 248, 0.15); margin-bottom: 8px; }
+        .header h1 { font-size: 20px; color: var(--color-accent); font-weight: 800; margin-bottom: 4px; letter-spacing: 0.5px; }
+        .header p { font-size: 12px; color: var(--color-text-muted); font-weight: 500; }
+
+        .footer { position: fixed; bottom: 0; left: 0; right: 0; background: linear-gradient(90deg, rgba(2, 6, 23, 0.98) 0%, rgba(15, 23, 42, 0.98) 100%); border-top: 1px solid rgba(56, 189, 248, 0.15); padding: 12px 20px; font-size: 11px; color: var(--color-text-muted); display: flex; justify-content: space-between; z-index: 1000; }
+        .footer a { color: var(--color-accent); text-decoration: none; font-weight: 600; }
         .footer a:hover { color: #0ea5e9; }
+
         .body-wrapper { margin-bottom: 45px; }
-        @media (max-width: 1024px) { .container { flex-direction: column; } .canvas-wrapper { height: 50vh; } .sidebar { width: 100%; height: 50vh; border-left: none; border-top: 1px solid rgba(56, 189, 248, 0.2); } .footer { flex-direction: column; gap: 8px; padding: 8px 12px; font-size: 10px; } }
+
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: rgba(56, 189, 248, 0.3); border-radius: 3px; }
+        ::-webkit-scrollbar-thumb:hover { background: rgba(56, 189, 248, 0.5); }
+
+        @media (max-width: 1024px) { 
+            .container { flex-direction: column; } 
+            .canvas-wrapper { height: 50vh; } 
+            .sidebar { width: 100%; height: 50vh; border-left: none; border-top: 1px solid rgba(56, 189, 248, 0.2); } 
+            .footer { flex-direction: column; gap: 8px; padding: 8px 12px; font-size: 10px; } 
+            .memory-grid-display { grid-template-columns: repeat(2, 1fr); }
+        }
     </style>
 </head>
 <body>
 <div class="body-wrapper">
     <div class="container">
-        <div class="canvas-wrapper"><canvas id="canvas"></canvas></div>
+        <div class="canvas-wrapper">
+            <canvas id="canvas"></canvas>
+            <div class="memory-grid-display" id="memoryGridDisplay"></div>
+        </div>
         <div class="sidebar">
-            <div class="header"><h1>DSA Visualizer</h1><p>3D Memory Visualization Tool</p></div>
+            <div class="header">
+                <h1>DSA Visualizer</h1>
+                <p>3D Memory Visualization Tool</p>
+            </div>
+
             <div class="panel">
                 <div class="panel-title">Create Variable</div>
-                <div class="form-group"><label class="form-label">Variable Name</label><input type="text" id="varName" placeholder="e.g., X, arr, count" maxlength="10"></div>
-                <div class="form-group"><label class="form-label">Value</label><input type="number" id="varValue" placeholder="e.g., 10, 42, 100"></div>
-                <div class="button-group"><button class="btn-primary" onclick="app.addVariable()">Add Variable</button><button class="btn-secondary" onclick="app.clearAll()">Clear All</button></div>
+                <div class="form-group">
+                    <label class="form-label">Variable Name</label>
+                    <input type="text" id="varName" placeholder="e.g., X, arr, count" maxlength="10">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Value</label>
+                    <input type="number" id="varValue" placeholder="e.g., 10, 42, 100">
+                </div>
+                <div class="button-group">
+                    <button class="btn-primary" onclick="app.addVariable()">Add Variable</button>
+                    <button class="btn-secondary" onclick="app.clearAll()">Clear All</button>
+                </div>
             </div>
+
             <div class="panel">
                 <div class="panel-title">Variables in Memory</div>
-                <div id="memoryBlocksContainer" class="memory-blocks-container"><div class="memory-empty-state">📍 Add variables to visualize memory</div></div>
-                <div id="memoryInfo" style="display: none;"></div>
+                <div id="memoryBlocksContainer" class="memory-blocks-container">
+                    <div class="memory-empty-state">📍 Add variables to visualize memory</div>
+                </div>
+                <div id="memoryInfo" class="memory-info" style="display: none;"></div>
             </div>
+
             <div class="panel">
                 <div class="panel-title">Memory Stats</div>
                 <div class="stats">
-                    <div class="stat-box"><div class="stat-value" id="totalVars">0</div><div class="stat-label">Variables</div></div>
-                    <div class="stat-box"><div class="stat-value" id="memoryUsed">0</div><div class="stat-label">Memory Units</div></div>
+                    <div class="stat-box">
+                        <div class="stat-value" id="totalVars">0</div>
+                        <div class="stat-label">Variables</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-value" id="memoryUsed">0</div>
+                        <div class="stat-label">Memory Units</div>
+                    </div>
                 </div>
             </div>
-            <div class="info-box"><strong>💡 Tip:</strong> Click on a memory block to highlight it in 3D. Click ✕ to delete it from memory!</div>
+
+            <div class="info-box">
+                <strong>💡 Tip:</strong> Click on a memory slot or card to select. Click ✕ to delete from memory!
+            </div>
+
             <div class="panel">
                 <div class="panel-title">View Controls</div>
-                <div class="button-group"><button class="btn-secondary" onclick="app.rotateView()">Rotate View</button><button class="btn-secondary" onclick="app.resetCamera()">Reset Camera</button></div>
+                <div class="button-group">
+                    <button class="btn-secondary" onclick="app.clearAll()">Reset Memory</button>
+                </div>
             </div>
         </div>
     </div>
 </div>
+
 <footer class="footer">
     <div><span>❤️ Made in India by <a href="https://github.com/sachinkasana" target="_blank">Sachin Kasana</a></span></div>
-    <div><span>v1.0.0 | <a href="https://https://dsa-visualizer-sk.vercel.app/" target="_blank">https://dsa-visualizer-sk.vercel.app/</a></span></div>
+    <div><span>v1.0.0 | <a href="https://dsa-visualizer-sk.vercel.app/" target="_blank">dsa-visualizer-sk.vercel.app</a></span></div>
 </footer>
+
 <script>
 class DSAVisualizer {
     constructor() {
-        this.scene = new THREE.Scene();
-        this.scene.background = new THREE.Color(0x0f172a);
-        const canvas = document.getElementById('canvas');
-        this.camera = new THREE.PerspectiveCamera(75, canvas.clientWidth / canvas.clientHeight, 0.1, 1000);
-        this.camera.position.set(0, 5, 10);
-        this.renderer = new THREE.WebGLRenderer({ canvas, antialias: true });
-        this.renderer.setSize(canvas.clientWidth, canvas.clientHeight);
-        this.renderer.setPixelRatio(window.devicePixelRatio);
-        const ambientLight = new THREE.AmbientLight(0xffffff, 0.6);
-        this.scene.add(ambientLight);
-        const pointLight = new THREE.PointLight(0x38bdf8, 0.8);
-        pointLight.position.set(10, 15, 10);
-        this.scene.add(pointLight);
         this.variables = new Map();
-        this.memoryBlocks = [];
         this.baseAddress = 1000;
         this.nextAddress = this.baseAddress;
         this.selectedVariableName = null;
-        this.animate();
-        window.addEventListener('resize', () => this.onWindowResize());
+        this.maxSlots = 8;
         document.getElementById('varName').addEventListener('keypress', (e) => {
             if (e.key === 'Enter') this.addVariable();
         });
@@ -146,136 +205,62 @@ class DSAVisualizer {
         const value = valueInput.value.trim();
         if (!name || !value) { alert('Please enter both variable name and value'); return; }
         if (this.variables.has(name)) { alert(`Variable "${name}" already exists!`); return; }
+        if (this.variables.size >= this.maxSlots) { alert('Memory full! Maximum 8 variables allowed.'); return; }
         const address = this.nextAddress++;
         const variable = { name, value: parseInt(value), address };
         this.variables.set(name, variable);
-        this.createMemoryBlock(variable);
         nameInput.value = '';
         valueInput.value = '';
         nameInput.focus();
         this.updateUI();
     }
-    createMemoryBlock(variable) {
-        const blockSize = 1.5;
-        const spacing = 0.5;
-        const index = this.variables.size - 1;
-        const geometry = new THREE.BoxGeometry(blockSize, blockSize, blockSize);
-        const material = new THREE.MeshStandardMaterial({
-            color: 0x38bdf8, metalness: 0.4, roughness: 0.1, emissive: 0x38bdf8, emissiveIntensity: 0.3
-        });
-        const mesh = new THREE.Mesh(geometry, material);
-        const xPos = index * (blockSize + spacing) - (index * (blockSize + spacing)) / 2;
-        mesh.position.set(xPos, 0, 0);
-        this.scene.add(mesh);
-        this.memoryBlocks.push({ mesh, variable, initialPosition: mesh.position.clone(), defaultEmissiveIntensity: 0.3, defaultScale: new THREE.Vector3(1, 1, 1) });
-        this.updateMemoryBlockTexture(mesh, variable);
-        mesh.scale.set(0, 0, 0);
-        this.animateBlock(mesh, 0.5);
-    }
-    updateMemoryBlockTexture(mesh, variable) {
-        const canvas = document.createElement('canvas');
-        canvas.width = 256;
-        canvas.height = 256;
-        const ctx = canvas.getContext('2d');
-        ctx.fillStyle = '#0f172a';
-        ctx.fillRect(0, 0, 256, 256);
-        ctx.strokeStyle = '#38bdf8';
-        ctx.lineWidth = 3;
-        ctx.strokeRect(10, 10, 236, 236);
-        ctx.fillStyle = '#38bdf8';
-        ctx.font = 'bold 32px Arial';
-        ctx.textAlign = 'center';
-        ctx.fillText(variable.name, 128, 80);
-        ctx.fillStyle = '#94a3b8';
-        ctx.font = '16px Arial';
-        ctx.fillText(`Addr: ${variable.address}`, 128, 130);
-        ctx.fillStyle = '#10b981';
-        ctx.font = 'bold 40px Arial';
-        ctx.fillText(variable.value, 128, 200);
-        const texture = new THREE.CanvasTexture(canvas);
-        mesh.material.map = texture;
-        mesh.material.map.needsUpdate = true;
-    }
-    animateBlock(mesh, duration) {
-        const startScale = mesh.scale.clone();
-        const startTime = Date.now();
-        const animate = () => {
-            const elapsed = (Date.now() - startTime) / 1000;
-            const progress = Math.min(elapsed / duration, 1);
-            mesh.scale.copy(startScale).multiplyScalar(progress);
-            mesh.rotation.y = progress * Math.PI * 2;
-            if (progress < 1) requestAnimationFrame(animate);
-            else mesh.scale.set(1, 1, 1);
-        };
-        animate();
-    }
     selectVariable(variableName) {
         this.selectedVariableName = variableName;
-        document.querySelectorAll('.memory-block').forEach(block => block.classList.remove('active'));
-        const activeBlock = document.querySelector(`[data-var-name="${variableName}"]`);
-        if (activeBlock) { activeBlock.classList.add('active'); activeBlock.scrollIntoView({ behavior: 'smooth', block: 'nearest' }); }
-        this.memoryBlocks.forEach(block => {
-            if (block.variable.name === variableName) {
-                this.animateMeshEmissive(block.mesh, 0.3, 0.8, 500);
-                this.animateMeshScale(block.mesh, new THREE.Vector3(1, 1, 1), new THREE.Vector3(1.3, 1.3, 1.3), 500);
-                const targetPos = block.mesh.position.clone();
-                targetPos.z += 5;
-                targetPos.y = 4;
-                this.animateCameraToTarget(targetPos, 800);
-            } else {
-                this.animateMeshEmissive(block.mesh, block.mesh.material.emissiveIntensity, 0.3, 500);
-                this.animateMeshScale(block.mesh, block.mesh.scale.clone(), block.defaultScale.clone(), 500);
-            }
-        });
-    }
-    animateMeshEmissive(mesh, from, to, duration) {
-        const startTime = Date.now();
-        const animate = () => {
-            const elapsed = Date.now() - startTime;
-            const progress = Math.min(elapsed / duration, 1);
-            mesh.material.emissiveIntensity = from + (to - from) * progress;
-            if (progress < 1) requestAnimationFrame(animate);
-        };
-        animate();
-    }
-    animateMeshScale(mesh, from, to, duration) {
-        const startTime = Date.now();
-        const animate = () => {
-            const elapsed = Date.now() - startTime;
-            const progress = Math.min(elapsed / duration, 1);
-            mesh.scale.x = from.x + (to.x - from.x) * progress;
-            mesh.scale.y = from.y + (to.y - from.y) * progress;
-            mesh.scale.z = from.z + (to.z - from.z) * progress;
-            if (progress < 1) requestAnimationFrame(animate);
-        };
-        animate();
+        this.updateUI();
     }
     deleteVariable(variableName) {
-        const blockIndex = this.memoryBlocks.findIndex(b => b.variable.name === variableName);
-        if (blockIndex !== -1) {
-            const block = this.memoryBlocks[blockIndex];
-            this.animateMeshScale(block.mesh, block.mesh.scale.clone(), new THREE.Vector3(0, 0, 0), 400);
-            this.animateMeshEmissive(block.mesh, block.mesh.material.emissiveIntensity, 0, 400);
-            setTimeout(() => { this.scene.remove(block.mesh); this.memoryBlocks.splice(blockIndex, 1); }, 400);
-        }
         this.variables.delete(variableName);
         this.selectedVariableName = null;
-        setTimeout(() => this.updateUI(), 400);
+        this.updateUI();
     }
-    animateCameraToTarget(targetPos, duration = 800) {
-        const startPos = this.camera.position.clone();
-        const startTime = Date.now();
-        const animate = () => {
-            const elapsed = Date.now() - startTime;
-            const progress = Math.min(elapsed / duration, 1);
-            const easeProgress = progress < 0.5 ? 2 * progress * progress : -1 + (4 - 2 * progress) * progress;
-            this.camera.position.copy(startPos).lerp(targetPos, easeProgress);
-            this.camera.lookAt(0, 2, 0);
-            if (progress < 1) requestAnimationFrame(animate);
-        };
-        animate();
+    clearAll() {
+        this.variables.clear();
+        this.nextAddress = this.baseAddress;
+        this.selectedVariableName = null;
+        this.updateUI();
     }
     updateUI() {
+        this.updateMemoryGrid();
+        this.updateMemoryBlocks();
+        this.updateStats();
+    }
+    updateMemoryGrid() {
+        const grid = document.getElementById('memoryGridDisplay');
+        grid.innerHTML = '';
+        const sortedVars = Array.from(this.variables.values()).sort((a, b) => a.address - b.address);
+        for (let i = 0; i < this.maxSlots; i++) {
+            const slot = document.createElement('div');
+            slot.className = 'memory-slot';
+            const variable = sortedVars[i];
+            if (variable) {
+                slot.classList.add('filled');
+                if (this.selectedVariableName === variable.name) slot.classList.add('active');
+                slot.innerHTML = `
+                    <div style="width: 100%;">
+                        <div class="slot-var-name">${variable.name}</div>
+                        <div class="slot-var-value">${variable.value}</div>
+                    </div>
+                    <div class="slot-address">@${variable.address}</div>
+                `;
+                slot.addEventListener('click', () => this.selectVariable(variable.name));
+            } else {
+                slot.classList.add('empty');
+                slot.innerHTML = '<div class="slot-empty-text">Empty</div>';
+            }
+            grid.appendChild(slot);
+        }
+    }
+    updateMemoryBlocks() {
         const container = document.getElementById('memoryBlocksContainer');
         if (this.variables.size === 0) {
             container.innerHTML = '<div class="memory-empty-state">📍 Add variables to visualize memory</div>';
@@ -288,7 +273,17 @@ class DSAVisualizer {
                 block.className = 'memory-block';
                 block.dataset.varName = variable.name;
                 if (this.selectedVariableName === variable.name) block.classList.add('active');
-                block.innerHTML = `<button class="block-delete-btn" onclick="app.deleteVariable('${variable.name}'); event.stopPropagation();">✕</button><div class="block-var-name">${variable.name}</div><div class="block-address">@${variable.address}</div><div class="block-value">${variable.value}</div>`;
+                block.innerHTML = `
+                    <div class="block-info">
+                        <div class="block-header">
+                            <div class="block-var-name">${variable.name}</div>
+                            <div class="block-type">int</div>
+                        </div>
+                        <div class="block-value">${variable.value}</div>
+                        <div class="block-address">@${variable.address}</div>
+                    </div>
+                    <button class="block-delete-btn" onclick="app.deleteVariable('${variable.name}'); event.stopPropagation();">✕</button>
+                `;
                 block.addEventListener('click', () => this.selectVariable(variable.name));
                 container.appendChild(block);
             });
@@ -297,69 +292,10 @@ class DSAVisualizer {
             document.getElementById('memoryInfo').innerHTML = `<strong>Memory Range:</strong> ${minAddr} - ${maxAddr} (${this.variables.size} slots used)`;
             document.getElementById('memoryInfo').style.display = 'block';
         }
+    }
+    updateStats() {
         document.getElementById('totalVars').textContent = this.variables.size;
         document.getElementById('memoryUsed').textContent = this.variables.size * 8;
-    }
-    clearAll() {
-        if (this.variables.size === 0) return;
-        this.memoryBlocks.forEach(block => this.scene.remove(block.mesh));
-        this.variables.clear();
-        this.memoryBlocks = [];
-        this.nextAddress = this.baseAddress;
-        this.selectedVariableName = null;
-        this.updateUI();
-        this.resetCamera();
-    }
-    rotateView() {
-        const currentPos = this.camera.position.clone();
-        const angle = Math.atan2(currentPos.z, currentPos.x) + Math.PI / 4;
-        const distance = currentPos.length();
-        const targetX = Math.cos(angle) * distance;
-        const targetZ = Math.sin(angle) * distance;
-        const startPos = this.camera.position.clone();
-        const startTime = Date.now();
-        const duration = 1000;
-        const animate = () => {
-            const elapsed = Date.now() - startTime;
-            const progress = Math.min(elapsed / duration, 1);
-            this.camera.position.x = startPos.x + (targetX - startPos.x) * progress;
-            this.camera.position.z = startPos.z + (targetZ - startPos.z) * progress;
-            this.camera.lookAt(0, 2, 0);
-            if (progress < 1) requestAnimationFrame(animate);
-        };
-        animate();
-    }
-    resetCamera() {
-        const startPos = this.camera.position.clone();
-        const targetPos = new THREE.Vector3(0, 5, 10);
-        const startTime = Date.now();
-        const duration = 800;
-        const animate = () => {
-            const elapsed = Date.now() - startTime;
-            const progress = Math.min(elapsed / duration, 1);
-            this.camera.position.copy(startPos).lerp(targetPos, progress);
-            this.camera.lookAt(0, 2, 0);
-            if (progress < 1) requestAnimationFrame(animate);
-        };
-        animate();
-    }
-    onWindowResize() {
-        const canvas = document.getElementById('canvas');
-        const width = canvas.clientWidth;
-        const height = canvas.clientHeight;
-        this.camera.aspect = width / height;
-        this.camera.updateProjectionMatrix();
-        this.renderer.setSize(width, height);
-    }
-    animate() {
-        requestAnimationFrame(() => this.animate());
-        this.memoryBlocks.forEach((block, index) => {
-            if (this.selectedVariableName !== block.variable.name) {
-                block.mesh.rotation.y += 0.005;
-                block.mesh.position.y = Math.sin(Date.now() * 0.001 + index * 0.5) * 0.3;
-            }
-        });
-        this.renderer.render(this.scene, this.camera);
     }
 }
 const app = new DSAVisualizer();
