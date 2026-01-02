@@ -1,0 +1,19 @@
+{
+    "name": "dsa-visualizer",
+    "version": "1.0.0",
+    "description": "Interactive 3D visualization tool for understanding memory management and data structures",
+    "main": "index.html",
+    "scripts": {
+      "dev": "npx http-server",
+      "start": "npx http-server -p 8000 -o index.html",
+      "deploy": "vercel"
+    },
+    "repository": {
+      "type": "git",
+      "url": "https://github.com/sachinkasana/dsa-visualizer.git"
+    },
+    "keywords": ["dsa", "data-structures", "algorithms", "memory-visualization", "3d", "learning-tool"],
+    "author": "Sachin Kasana",
+    "license": "MIT",
+    "homepage": "https://dsa-visualizer.vercel.app"
+  }

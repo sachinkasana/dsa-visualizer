@@ -1,0 +1,16 @@
+node_modules/
+npm-debug.log
+yarn-error.log
+.vscode/
+.idea/
+*.swp
+*~
+.DS_Store
+*.sublime-project
+.env
+.vercel/
+dist/
+build/
+logs/
+*.log
+.cache/
