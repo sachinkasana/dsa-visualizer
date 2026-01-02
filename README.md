@@ -6,7 +6,7 @@
 
 An **interactive 3D visualization tool** for understanding memory management, data structures, and algorithms. Perfect for DSA learners, educators, and visual learners.
 
-🎮 **Live Demo**: [dsa-visualizer.vercel.app](https://dsa-visualizer.vercel.app)
+🎮 **Live Demo**: [https://dsa-visualizer-sk.vercel.app/](https://https://dsa-visualizer-sk.vercel.app/)
 
 ## ✨ Features
 
@@ -23,7 +23,7 @@ An **interactive 3D visualization tool** for understanding memory management, da
 ## 🚀 Quick Start
 
 ### Live Demo (Recommended)
-Visit [dsa-visualizer.vercel.app](https://dsa-visualizer.vercel.app) - No installation needed!
+Visit [https://dsa-visualizer-sk.vercel.app/](https://https://dsa-visualizer-sk.vercel.app/) - No installation needed!
 
 ### Local Development
 ```bash
